@@ -33,6 +33,9 @@ To run the code in this repository, ensure you have the following dependencies i
 pip install -r requirements.txt
 ```
 
+## Data availability
+
+The original datasets analysed in this study are not publicly available due to privacy concerns, as they contain potentially identifiable information.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

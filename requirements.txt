@@ -1,0 +1,12 @@
+contextily==1.6.0
+geopandas==0.14.1
+matplotlib==3.8.2
+numpy==2.1.2
+pandas==2.2.3
+pytz==2024.1
+scipy==1.14.1
+seaborn==0.13.2
+Shapely==2.0.6
+statsmodels==0.14.0
+timezonefinder==6.5.3
+tqdm==4.66.1

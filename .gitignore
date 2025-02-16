@@ -2,5 +2,5 @@
 /data_created 
 gitignore_explanation.txt
 .DS_Store
-.ipynb_checkpoints
+/.ipynb_checkpoints
 

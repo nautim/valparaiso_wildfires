@@ -85,7 +85,7 @@ start_time = time.time()
 
 print('Loading data...')
 
-homelocations_merged=pd.read_parquet('data_created/homelocations_merged.parquet')
+homelocations_merged=pd.read_parquet('data_created/homelocations_merged_cleaned.parquet')
 evacuated_people = helper.upload_list_txt('data_created/evacuated.txt')
 
 result = helper.upload_if_exists('data_created/bootstrapped_merged_noses.parquet')

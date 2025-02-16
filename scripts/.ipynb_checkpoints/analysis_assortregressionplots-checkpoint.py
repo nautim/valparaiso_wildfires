@@ -129,29 +129,29 @@ fig, axs = plt.subplot_mosaic([
     ['a', 'b',],
     ['a', 'c']], 
     #layout="constrained"
-    figsize =(12, 5), height_ratios=[1,1],width_ratios=[2,1],
+    figsize =(11, 5), height_ratios=[1,1],width_ratios=[2,1],
                             gridspec_kw={'wspace':0.3, 'hspace':0.5})
 
 # Plotting the assortativity values over time
 axs['a'].plot(assortativity_moved_df_plot['dates'], assortativity_moved_df_plot['assortativity_control'], marker='o', linestyle='-', color=orange, label='Not Affected')
 axs['a'].plot(assortativity_moved_df_plot['dates'], assortativity_moved_df_plot['assortativity_evacuated'], marker='o', linestyle='-', color=green, label='Evacuated')
 axs['a'].set_title('')
-axs['a'].set_ylabel('Assortativity')
+axs['a'].set_ylabel('Assortativity', fontsize=14)
 
 # Set x-axis to display only the dates
 axs['a'].xaxis.set_major_locator(mdates.DayLocator())
 axs['a'].xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 
-axs['a'].axvline(x=datetime.datetime(2024, 2, 2), color='red', linestyle=':', lw =1.5, alpha = 0.6, zorder=100)
-axs['a'].text(x=datetime.datetime(2024, 2, 1), y=0.05, s='1-2 February',
-        fontsize=13, rotation='vertical', verticalalignment='bottom', color='red', bbox=dict(facecolor='w', edgecolor='none', pad=0.0, alpha=0.6), zorder=100)
+axs['a'].axvline(x=datetime.datetime(2024, 2, 2), color='red', linestyle=':', lw=2, alpha=0.7, zorder=100)
+axs['a'].text(x=datetime.datetime(2024, 1, 26), y=0.5, s='1-2 February',
+        fontsize=13, rotation='horizontal', verticalalignment='top', color='red', bbox=dict(facecolor='w', edgecolor='none', pad=0.0, alpha=0.6), zorder=100)
 
 
 # Setting x-ticks and labels based on homelocations_warned dataframe
 unique_dates = assortativity_df_plot.drop_duplicates(subset=['dates'])['dates'].unique()
 axs['a'].set_xticks(unique_dates)
-xticklabels = [date.strftime('%d \n%m \n%a ') if i % 2 == 0 else '' for i, date in enumerate(unique_dates)]
-axs['a'].set_xticklabels(xticklabels, fontsize=8)
+xticklabels = [date.strftime('%d \n%m \n%a ') if i % 3 == 0 else '' for i, date in enumerate(unique_dates)]
+axs['a'].set_xticklabels(xticklabels, fontsize=11)
 
 axs['a'].set_xlim(datetime.datetime(2024, 1, 19), datetime.datetime(2024, 2, 19))
 axs['a'].set_ylim(0, 0.55)
@@ -165,15 +165,14 @@ axs['a'].legend(frameon=False)
 
 rdd_df_moved.plot.line(x="time_delta", y="assortativity_evacuated", color=green, ax=axs['b'], legend=False)
 rdd_df_moved.plot(x="time_delta", y="predictions", ax=axs['b'], color=green, linestyle='--', legend=False)
-plt.axvline(0, color='red', linestyle='--', label='2-3 February')
 
 axs['b'].set_title("")
-axs['b'].set_ylabel('Assortativity')
+axs['b'].set_ylabel('Assortativity', fontsize=14)
 axs['b'].set_xlabel('')
 
-axs['b'].axvline(x=0, color='red', linestyle=':', lw =1.5, alpha = 0.6, zorder=100)
-axs['b'].text(x=-3, y=0.05, s='2-3 February',
-        fontsize=13, rotation='vertical', verticalalignment='bottom', color='red', bbox=dict(facecolor='w', edgecolor='none', pad=0.0, alpha=0.6), zorder=100)
+axs['b'].axvline(x=0, color='red', linestyle=':', lw=2, alpha=0.7, zorder=100)
+axs['b'].text(x=-16, y=0.35, s='2-3 February',
+        fontsize=13, rotation='horizontal', verticalalignment='top', color='red', bbox=dict(facecolor='w', edgecolor='none', pad=0.0, alpha=0.6), zorder=100)
 
 
 ##### Bottom Right
@@ -186,25 +185,22 @@ sns.lineplot(ax=axs['c'], x='time_delta', y='value', hue='group', data=dd_df_mov
 sns.lineplot(ax=axs['c'], x='time_delta', y='predictions', hue='group', data=dd_df_moved,
              hue_order=['assortativity_control', 'assortativity_evacuated'], palette=[orange, green], linestyle='--', legend=False)
 
-axs['c'].axvline(0, color='red', linestyle='--', label='2-3 February')
-
-
 axs['c'].set_title("")
-axs['c'].set_ylabel('Assortativity')
-axs['c'].set_xlabel('Time Delta')
+axs['c'].set_ylabel('Assortativity', fontsize=14)
+axs['c'].set_xlabel('Time Delta', fontsize=14)
 
-axs['c'].axvline(x=0, color='red', linestyle=':', lw =1.5, alpha = 0.6, zorder=100)
-axs['c'].text(x=-3, y=0.05, s='2-3 February',
-        fontsize=13, rotation='vertical', verticalalignment='bottom', color='red', bbox=dict(facecolor='w', edgecolor='none', pad=0.0, alpha=0.6), zorder=100)
+axs['c'].axvline(x=0, color='red', linestyle=':', lw=2, alpha=0.7, zorder=100)
+axs['c'].text(x=-16, y=0.35, s='2-3 February',
+        fontsize=13, rotation='horizontal', verticalalignment='top', color='red', bbox=dict(facecolor='w', edgecolor='none', pad=0.0, alpha=0.6), zorder=100)
 
 ##### Legend
 
-c_differences   =[(Line2D([0],[0], marker='s', color=c, markerfacecolor=c,ls='',  markersize=8, label=mod)) for c,mod in zip([green, orange],
+c_differences   =[(Line2D([0],[0], marker='s', color=c, markerfacecolor=c,ls='',  markersize=10, label=mod)) for c,mod in zip([green, orange],
                                                                                                                            ['Likely Evacuated','Not Affected'])]
 lines =[(Line2D([0],[0], marker='', color='grey', markerfacecolor='grey',ls=l,  lw=2.5, label=mod)) for l,mod in zip(['-', '--'],['Data','Fit'])]
 
-fig.legend(handles=lines,bbox_to_anchor=(1.08,0.6), fontsize = 13, ncols= 2, frameon=False,columnspacing=0.8, handletextpad=0.1,labelspacing=0.1)
-fig.legend(handles=c_differences,bbox_to_anchor=(1.09,0.55), fontsize = 13, title= '', frameon=False,columnspacing=0.5, handletextpad=0.1,labelspacing=0.1)
+fig.legend(handles=lines,bbox_to_anchor=(1.08,0.6), fontsize = 14, ncols= 2, frameon=False,columnspacing=0.8, handletextpad=0.1,labelspacing=0.1)
+fig.legend(handles=c_differences,bbox_to_anchor=(1.1,0.55), fontsize = 14, title= '', frameon=False,columnspacing=0.5, handletextpad=0.1,labelspacing=0.1)
 
 plots_l = ['a)', 'b)', 'c)']
 for ia, ax in enumerate(fig.axes): 
@@ -214,7 +210,7 @@ for ia, ax in enumerate(fig.axes):
         horizontalalignment='left',
         verticalalignment='bottom',
         weight = 'bold',
-        transform=ax.transAxes,fontsize = 13)
+        transform=ax.transAxes,fontsize = 14)
 
 plt.savefig('visuals_created/assortativity_moved.pdf', bbox_inches = 'tight')
 
@@ -227,29 +223,29 @@ fig, axs = plt.subplot_mosaic([
     ['a', 'b',],
     ['a', 'c']], 
     #layout="constrained"
-    figsize =(12, 5), height_ratios=[1,1],width_ratios=[2,1],
+    figsize =(11, 5), height_ratios=[1,1],width_ratios=[2,1],
                             gridspec_kw={'wspace':0.3, 'hspace':0.5})
 
 # Plotting the assortativity values over time
 axs['a'].plot(assortativity_df_plot['dates'], assortativity_df_plot['assortativity_control'], marker='o', linestyle='-', color=orange, label='Not Affected')
 axs['a'].plot(assortativity_df_plot['dates'], assortativity_df_plot['assortativity_evacuated'], marker='o', linestyle='-', color=green, label='Evacuated')
 axs['a'].set_title('')
-axs['a'].set_ylabel('Assortativity')
+axs['a'].set_ylabel('Assortativity', fontsize=14)
 
 # Set x-axis to display only the dates
 axs['a'].xaxis.set_major_locator(mdates.DayLocator())
 axs['a'].xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 
-axs['a'].axvline(x=datetime.datetime(2024, 2, 2), color='red', linestyle=':', lw =1.5, alpha = 0.6, zorder=100)
-axs['a'].text(x=datetime.datetime(2024, 2, 1), y=0.05, s='1-2 February',
-        fontsize=13, rotation='vertical', verticalalignment='bottom', color='red', bbox=dict(facecolor='w', edgecolor='none', pad=0.0, alpha=0.6), zorder=100)
+axs['a'].axvline(x=datetime.datetime(2024, 2, 2), color='red', linestyle=':', lw=2, alpha=0.7, zorder=100)
+axs['a'].text(x=datetime.datetime(2024, 1, 26), y=0.8, s='1-2 February',
+        fontsize=13, rotation='horizontal', verticalalignment='top', color='red', bbox=dict(facecolor='w', edgecolor='none', pad=0.0, alpha=0.6), zorder=100)
 
 
 # Setting x-ticks and labels based on homelocations_warned dataframe
 unique_dates = assortativity_df_plot.drop_duplicates(subset=['dates'])['dates'].unique()
 axs['a'].set_xticks(unique_dates)
-xticklabels = [date.strftime('%d \n%m \n%a ') if i % 2 == 0 else '' for i, date in enumerate(unique_dates)]
-axs['a'].set_xticklabels(xticklabels, fontsize=8)
+xticklabels = [date.strftime('%d \n%m \n%a ') if i % 3 == 0 else '' for i, date in enumerate(unique_dates)]
+axs['a'].set_xticklabels(xticklabels, fontsize=11)
 
 axs['a'].set_xlim(datetime.datetime(2024, 1, 19), datetime.datetime(2024, 2, 19))
 axs['a'].set_ylim(0, 1)
@@ -263,15 +259,14 @@ axs['a'].legend(frameon=False)
 
 rdd_df_all.plot.line(x="time_delta", y="assortativity_evacuated", color=green, ax=axs['b'], legend=False)
 rdd_df_all.plot(x="time_delta", y="predictions", ax=axs['b'], color=green, linestyle='--', legend=False)
-plt.axvline(0, color='red', linestyle='--', label='2-3 February')
 
 axs['b'].set_title("")
-axs['b'].set_ylabel('Assortativity')
+axs['b'].set_ylabel('Assortativity', fontsize=14)
 axs['b'].set_xlabel('')
 
-axs['b'].axvline(x=0, color='red', linestyle=':', lw =1.5, alpha = 0.6, zorder=100)
-axs['b'].text(x=-3, y=0.5, s='2-3 February',
-        fontsize=13, rotation='vertical', verticalalignment='bottom', color='red', bbox=dict(facecolor='w', edgecolor='none', pad=0.0, alpha=0.6), zorder=100)
+axs['b'].axvline(x=0, color='red', linestyle=':', lw=2, alpha=0.7, zorder=100)
+axs['b'].text(x=-16, y=0.8, s='2-3 February',
+        fontsize=13, rotation='horizontal', verticalalignment='top', color='red', bbox=dict(facecolor='w', edgecolor='none', pad=0.0, alpha=0.6), zorder=100)
 
 
 ##### Bottom Right
@@ -284,25 +279,23 @@ sns.lineplot(ax=axs['c'], x='time_delta', y='value', hue='group', data=dd_df_all
 sns.lineplot(ax=axs['c'], x='time_delta', y='predictions', hue='group', data=dd_df_all,
              hue_order=['assortativity_control', 'assortativity_evacuated'], palette=[orange, green], linestyle='--', legend=False)
 
-axs['c'].axvline(0, color='red', linestyle='--', label='2-3 February')
-
 
 axs['c'].set_title("")
-axs['c'].set_ylabel('Assortativity')
-axs['c'].set_xlabel('Time Delta')
+axs['c'].set_ylabel('Assortativity', fontsize=14)
+axs['c'].set_xlabel('Time Delta', fontsize=14)
 
-axs['c'].axvline(x=0, color='red', linestyle=':', lw =1.5, alpha = 0.6, zorder=100)
-axs['c'].text(x=-3, y=0.5, s='2-3 February',
-        fontsize=13, rotation='vertical', verticalalignment='bottom', color='red', bbox=dict(facecolor='w', edgecolor='none', pad=0.0, alpha=0.6), zorder=100)
+axs['c'].axvline(x=0, color='red', linestyle=':', lw=2, alpha=0.7, zorder=100)
+axs['c'].text(x=-16, y=0.8, s='2-3 February',
+        fontsize=13, rotation='horizontal', verticalalignment='top', color='red', bbox=dict(facecolor='w', edgecolor='none', pad=0.0, alpha=0.6), zorder=100)
 
 ##### Legend
 
-c_differences   =[(Line2D([0],[0], marker='s', color=c, markerfacecolor=c,ls='',  markersize=8, label=mod)) for c,mod in zip([green, orange],
+c_differences   =[(Line2D([0],[0], marker='s', color=c, markerfacecolor=c,ls='',  markersize=10, label=mod)) for c,mod in zip([green, orange],
                                                                                                                            ['Likely Evacuated','Not Affected'])]
 lines =[(Line2D([0],[0], marker='', color='grey', markerfacecolor='grey',ls=l,  lw=2.5, label=mod)) for l,mod in zip(['-', '--'],['Data','Fit'])]
 
-fig.legend(handles=lines,bbox_to_anchor=(1.08,0.6), fontsize = 13, ncols= 2, frameon=False,columnspacing=0.8, handletextpad=0.1,labelspacing=0.1)
-fig.legend(handles=c_differences,bbox_to_anchor=(1.09,0.55), fontsize = 13, title= '', frameon=False,columnspacing=0.5, handletextpad=0.1,labelspacing=0.1)
+fig.legend(handles=lines,bbox_to_anchor=(1.08,0.6), fontsize = 14, ncols= 2, frameon=False,columnspacing=0.8, handletextpad=0.1,labelspacing=0.1)
+fig.legend(handles=c_differences,bbox_to_anchor=(1.1,0.55), fontsize = 14, title= '', frameon=False,columnspacing=0.5, handletextpad=0.1,labelspacing=0.1)
 
 plots_l = ['a)', 'b)', 'c)']
 for ia, ax in enumerate(fig.axes): 
@@ -312,7 +305,7 @@ for ia, ax in enumerate(fig.axes):
         horizontalalignment='left',
         verticalalignment='bottom',
         weight = 'bold',
-        transform=ax.transAxes,fontsize = 13)
+        transform=ax.transAxes,fontsize = 14)
 
 plt.savefig('visuals_created/assortativity_all.pdf', bbox_inches = 'tight')
 
